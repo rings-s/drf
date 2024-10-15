@@ -14,18 +14,35 @@ class ProductSerializer(serializers.ModelSerializer):
             'stock',
         
         )
-        
-        
     def validate_price(self, value):
         if value <= 0:
             raise serializers.ValidationError("Price must be greater than zero.")
         return value
 
 
-class OrderSerializer(serializers.ModelSerializer): 
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = (
+            'product',
+            'quantity',
+            
+        )
+
+# nested serializer
+class OrderSerializer(serializers.ModelSerializer):
+    # nested serializer
+    items = OrderItemSerializer(many=True, read_only=True) 
+    
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = (
+            'order_id',
+            'created_at',
+            'user',
+            'status',
+            'items',
+            )
         
 
 
