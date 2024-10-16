@@ -61,9 +61,19 @@ class OrderSerializer(serializers.ModelSerializer):
         )
 
 
-    # serializers convert python data types into json data
 
-    # serializer_fields converting between primitive values and internal data types, they also deal with validating input values, as well as retrieving and setting the values from thier parent objects
+class ProductInfoSerializer(serializers.Serializer):
+    # Serializer for gathering product information: list of products, count, and maximum price.
+    products = ProductSerializer(many=True)  # Serializing multiple products.
+    count = serializers.IntegerField()  # Total count of products.
+    max_price = serializers.DecimalField(max_digits=10, decimal_places=2)  # Maximum price among the products.
+
+
+
+# serializers convert python data types into json data
+
+# serializer_fields converting between primitive values and internal data types, they also deal with validating input values, as well as retrieving and setting the values from thier parent objects
     
     
     
+
